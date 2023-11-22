@@ -9,7 +9,7 @@ I'm cute, please give me money.
 
 <p class="text-xl mb-2">Fast Payment System (FPS)</p>
 
-E-Mail: <span class="select-all">liyanqwq@duianit.cn</span>
+E-Mail: <span class="select-all">liyanqwq@gmail.com</span>
 
 <br />
 
