@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@import "preline/variants.css";
+
+
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+
+@theme {
+    --font-sans: 'IBM Plex Sans', 'Noto Sans HK', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-serif: 'IBM Plex Serif', 'Noto Serif HK', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-kawaii: 'Zen Kurenaido', 'Comic Sans MS', 'Comic Sans', sans-serif;
+}

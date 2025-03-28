@@ -1,13 +1,23 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+import { ClientRouter } from "astro:transitions";
+---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/webp" href="/favicon.webp" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description}>
+		<title>{title}</title>
+		<ClientRouter />
 	</head>
-	<body>
+	<body class="{classes}">
 		<slot />
 	</body>
 </html>
@@ -20,3 +30,5 @@
 		height: 100%;
 	}
 </style>
+
+<script is:inline src="./assets/vendor/preline/preline.js"></script>

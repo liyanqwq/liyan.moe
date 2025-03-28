@@ -1,0 +1,158 @@
+---
+const { frontmatter } = Astro.props;
+const title = frontmatter.title + (Astro.url.pathname === '/main' ? '' : ' - 立言的網站 Li Yan\'s Website');
+const isMain = Astro.url.pathname === '/main';
+const desc = frontmatter.description || "";
+import { ClientRouter } from "astro:transitions";
+import '../styles/global.css'
+interface NavItem {
+    name: string;
+    name_eng: string;
+    url: string;
+    is_active: boolean;
+    color: string;
+}
+
+const navList: NavItem[] = [
+    { name: '關於我', name_eng: 'About', url: '/about', is_active: false, color: 'blue' },
+    { name: '作品集', name_eng: 'Portfolio', url: '/portfolio', is_active: false, color: 'green' },
+    { name: '技術博客', name_eng: 'Blog', url: '//blog.liyan.moe', is_active: false, color: 'indigo' },
+    { name: '流光志', name_eng: 'Diary', url: '//diary.liyan.moe', is_active: false, color: 'red' },
+    { name: '業餘電台', name_eng: 'VR2ZUN', url: '//vr2zun.com', is_active: false, color: 'purple' },
+    { name: '友情鏈接', name_eng: 'Links', url: '/links', is_active: false, color: 'pink' },
+    { name: '捐助我', name_eng: 'Donate', url: '/donate', is_active: false, color: 'amber' },
+];
+
+navList.forEach(item => {
+    item.is_active = Astro.url.pathname === item.url;
+});
+
+function generateColorScheme() {
+    const colors = ['red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink', 'amber'];
+    const colorMap = {
+        'red': 'from-red-500/80 via-red-500/65 hover:bg-red-500/80 bg-red-500 border-red-500',
+        'yellow': 'from-yellow-500/80 via-yellow-500/65 hover:bg-yellow-500/80 bg-yellow-500 border-yellow-500',
+        'green': 'from-green-500/80 via-green-500/65 hover:bg-green-500/80 bg-green-500 border-green-500',
+        'blue': 'from-blue-500/80 via-blue-500/65 hover:bg-blue-500/80 bg-blue-500 border-blue-500',
+        'indigo': 'from-indigo-500/80 via-indigo-500/65 hover:bg-indigo-500/80 bg-indigo-500 border-indigo-500',
+        'purple': 'from-purple-500/80 via-purple-500/65 hover:bg-purple-500/80 bg-purple-500 border-purple-500',
+        'pink': 'from-pink-500/80 via-pink-500/65 hover:bg-pink-500/80 bg-pink-500 border-pink-500',
+        'amber': 'from-amber-500/80 via-amber-500/65 hover:bg-amber-500/80 bg-amber-500 border-amber-500',
+    };
+    return colorMap;
+}
+
+
+
+
+
+
+---
+<!doctype html>
+<html lang="zh-HK">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/webp" href="/favicon.webp" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={desc}>
+		<title>{title} </title>
+		<ClientRouter />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Noto+Sans+HK:wght@100..900&family=Noto+Serif+HK:wght@200..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap" rel="stylesheet">
+	</head>
+	<body class="font-sans select-none w-screen h-screen overflow-hidden">
+        <div class="fixed md:flex md:relative w-screen h-screen overflow-hidden">
+            <div class="w-full md:w-200 h-full flex flex-col transition-all delay-200 ease-in-out">
+                <div onclick='document.getElementById("goto_main").click()' class="bg-linear-to-r from-white/70 via-white/55 via-60% to-transparent p-8 flex md:mr-12 transition-all delay-200 ease-in-out">
+                    <a id="goto_main" class="hidden" href="/main"></a>
+                    <div class="flex items-center mr-6 transition-all delay-200 ease-in-out">
+                        <a href="/" id='avatar' class="relative size-20 overflow-hidden rounded-full bg-white/70 hover:bg-white backdrop-blur-md border border-white">
+                            <img src="/assets/avatar_1.webp" class="size-20 rounded-full object-cover object-center scale-120 absolute left-0 top-1.5" onmouseover="this.src='/assets/avatar_2.webp'" onmouseout="this.src='/assets/avatar_1.webp'"/>
+                        </a>
+                        <script>
+                        </script>
+                    </div>
+                    <div class="flex flex-col justify-center items-start">
+                        <div class="font-serif font-bold text-2xl tracking-wider mb-1">立言<span class="font-medium ml-2 tracking-normal">Li Yan</span></div>
+                        <div class="font-kawaii opacity-60 text-xs font-light tracking-widest">求真務實，重義輕利。</div>
+                    </div>
+                </div>
+                <div class="h-full pb-20 mb-4 md:mb-0 flex-col overflow-x-visible overflow-y-scroll snap-y snap-mandatory scrollbar-hidden" style="mask: linear-gradient(180deg, #000 calc(100% - 5rem), transparent)">
+                    {navList.map((item) => (
+                        <a href={item.url} class={item.is_active ? `flex items-center snap-start snap-always h-20 nav-active md:mr-12 border-r border-[0.5px] border-${item.color}-500 bg-${item.color}-500 transition-all delay-200 ease-in-out` : `flex items-center snap-start snap-always h-20 md:mr-12 bg-linear-to-r from-${item.color}-500/80 via-${item.color}-500/65 via-60% to-transparent hover:bg-${item.color}-500/80 transition-all delay-200 ease-in-out`}>
+                            <div class="ml-8 tracking-widest font-kawaii text-2xl text-white">{item.name} <span class="ml-3 tracking-wider">{item.name_eng}</span></div>
+                        </a>
+                    ))}
+                </div>
+                <div class="flex items-center pb-4 px-8 text-white/30 text-sm font-sans font-light tracking-wider">&copy; 109-{new Date().getFullYear() - 1911}&nbsp;&nbsp;<a href="//github.com/liyanqwq" class="text-white/50 hover:text-white transition-all delay-75 ease-in-out">Li Yan</a>&nbsp;&nbsp;<a href="//github.com/liyanqwq/liyan.moe" class="flex items-center"><svg viewBox="0 0 24 24" aria-hidden="true" class="inline size-4 fill-white/50 hover:fill-white hover:scale-150 transition-all delay-75 ease-in-out"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0 1 12 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48 3.97-1.32 6.833-5.054 6.833-9.458C22 6.463 17.522 2 12 2Z"></path></svg></a></div>
+            </div>
+            <div class={`fixed top-0 left-0 backdrop-blur-xl backdrop-brightness-50 md:backdrop-blur-none md:backdrop-brightness-100 md:relative ${isMain ? 'hidden':'flex'} md:flex w-screen h-screen md:w-full md:h-full z-20 p-4 justify-center items-center`}>
+                <div class={`w-full h-full border border-gray-200 shadow-sm shadow-white/20 bg-neutral-50/85 rounded-xl overflow-hidden flex flex-col ${ isMain ? 'hidden' : ''} transition-all delay-200 ease-in-out`}>
+                    <div class="bg-white/80 py-2 flex items-center justify-between px-4">
+                        <div class="font-serif text-sm text-black/60 tracking-widest">{frontmatter.title.split(' ')[0]}<span class="ml-2">{frontmatter.title.split(' ')[1]}</span></div>
+                        <a href="/main"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-3 stroke-black/60 hover:stroke-black hover:scale-150">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                          </svg></a>
+                    </div>
+                    <div class="font-serif px-4 py-8 overflow-x-hidden overflow-y-scroll scrollbar-hidden" style="mask: linear-gradient(180deg, #000 calc(100% - 2rem), transparent)">
+                        <div class="prose max-w-full text-justify">
+                            <slot />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a id="hitokoto_text" class={`fixed bottom-4 right-4 hidden md:block text-white opacity-0 font-kawaii font-light tracking-widest z-10 ${isMain?'hitokoto-active':''} transition delay-1000 ease-in-out`}></a>
+        <script is:inline data-astro-rerun>
+            if (0 && document.getElementById('hitokoto_text').classList.contains('hitokoto-active')) {
+               fetch('https://v1.hitokoto.cn/?c=a&c=b&c=i&min_length=10&max_length=30')
+                .then(response => response.json())
+                .then(data => {
+                    const hitokoto = document.querySelector('#hitokoto_text')
+                    hitokoto.innerText = data.hitokoto
+                    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+                    hitokoto.classList.remove('opacity-0');
+                    hitokoto.classList.add('opacity-50');
+                })
+                .catch(console.error)
+            }
+        </script>
+        <script>import("preline/dist/index.js");</script>
+	</body>
+</html>
+<style>
+    /* hide page scrollbar */
+    .scrollbar-hidden { scrollbar-width: none; } /* Firefox */
+    .scrollbar-hidden { -ms-overflow-style: none; } /* IE and Edge */
+    .scrollbar-hidden::-webkit-scrollbar, .scrollbar-hidden::-webkit-scrollbar-button { display: none; } /* Chrome */
+    /* end hide page scrollbar */
+    .nav-active {
+        position: relative;
+    }
+    .nav-active::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -30px;
+        height: 100%;
+        width: 30px;
+        background-color: inherit;
+        clip-path: polygon(0 0, 0 100%, 100% 50%);
+    }
+    body {
+        background: url('/assets/image.webp');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        transition: all 1s linear;
+    }
+    @media (min-width: 768px) {
+        body {
+            background-position: left center;
+        }
+    }
+
+</style>

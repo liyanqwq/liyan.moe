@@ -1,11 +1,296 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import '../styles/global.css';
 ---
+<!doctype html>
+<html lang="zh-HK">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>立言的網站 Li Yan's Website</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/favicon.webp" />
+    <meta name="generator" content={Astro.generator} />
+    <style>
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      .cursor {
+        animation: blink 1s step-end infinite;
+      }
+      .terminal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        transition: opacity 20s ease-in-out;
+      }
+      .terminal {
+		position: fixed;
+        /* font-family: monospace; */
+        line-height: 1.5;
+        white-space: pre-wrap;
+        color: #ffffff;
+        width: 100%;
+        padding: 16px;
+        overflow: hidden;
+        min-height: 100vh;
+		bottom: 0;
+      }
+      .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
+      .video-container video {
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        filter: brightness(0.8);
+      }
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+        transition: opacity 0.8s ease-out;
+      }
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: rgb(255, 255, 255);
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white min-h-screen">
+	<a href="/main" class="hidden" id="goto_main"></a>
+    <div class="loading select-none" id="loading">
+      <div class="loader"></div>
+      <p class="text-white mt-4">正在啟動 Arch Linux...</p>
+    </div>
+	<a href="/main" class="font-mono fixed right-4 bottom-4 z-15 px-4 py-2 border-2 border-gray-200 rounded-full text-base text-white opacity-40 hover:opacity-100 hover:bg-gray-200 hover:text-black">Skip <span class="font-black">&gt;</span></a>
+    <div class="video-container" id="video-container">
+      <video id="bg-video" autoplay muted>
+        <source src="/assets/videos/back.webm" type="video/mp4" />
+      </video>
+    </div>
 
-<Layout>
-	<Welcome />
-</Layout>
+    <div class="terminal-container select-none" id="terminal-container">
+      <div class="font-mono terminal text-sm" id="terminal"></div>
+    </div>
+
+    <script>
+import { sequence } from "astro:middleware";
+import { transitionEnabledOnThisPage } from "astro:transitions/client";
+
+      const terminal = document.getElementById("terminal");
+      const loading = document.getElementById("loading");
+      const videoContainer = document.getElementById("video-container");
+      const terminalContainer = document.getElementById("terminal-container");
+      const video = document.getElementById("bg-video");
+
+      const bootMessages = [
+        "Booting Arch Linux kernel 8.9.6-426-catfish...",
+        "",
+        "[    0.000000] Linux version 8.9.6-426-catfish (compiler@nekovm) (gcc (Arch Linux 11.4.5-1~14) 11.4.5)",
+        "[    0.000114] Command line: BOOT_IMAGE=/vmlinuz-8.9.6-426-catfish root=UUID=arch2105-0721-4981-95c2-4a4f59e4f5e7 ro quiet splash",
+        "[    0.034221] ACPI: RSDP 0x00000000000F0490 000024 (v02 _NEKO_)",
+        "[    0.203155] ACPI: Core revision 20211114",
+        "[    0.456213] Initialized first 896MB of memory",
+        "[    0.723341] Freeing initrd memory: 51644K",
+        "[    0.903553] Detected 7.21 GHz NyanProcessor, id: 0x89645",
+        "[    1.103771] Booting processor 1, id: 0x89645",
+        "[    1.233991] Booting processor 2, id: 0x89646",
+        "[    1.348102] Booting processor 3, id: 0x89647",
+        "[    1.452124] Booting processor 4, id: 0x89648",
+        "[    1.572367] usb 1-1: New USB device found, idVendor=0721, idProduct=8964",
+        "[    1.798457] usb 2-1: New USB device found, idVendor=1145, idProduct=1419",
+        "[    2.012445] tsc: Marking TSC stable for neko processors",
+        "[    2.145234] nya1000e 0000:00:1f.6: NIC Link is Up 1145 Mbps Full Duplex",
+        "[    2.298771] EXT4-fs (nda1): mounted filesystem with ordered data mode",
+        "[    2.383410] systemd[1]: Detected architecture x86-64.",
+        "[    2.556778] systemd[1]: Set hostname to <NekoVM>.",
+        "[    2.778991] systemd[1]: Started Forward Password Requests to Wall Directory Watch.",
+        "[    3.011534] systemd[1]: Reached target Local Encrypted Volumes.",
+        "[    3.234523] systemd[1]: Reached target Remote File Systems.",
+        "[    3.341239] systemd[1]: Reached target Slices.",
+        "[    3.567821] systemd[1]: Listening on udev Control Socket.",
+        "[    3.612456] systemd[1]: Listening on udev Kernel Socket.",
+        "[    3.890123] systemd[1]: Created slice system-nyan.slice.",
+        "[    4.011234] systemd[1]: Started Journal Service.",
+        "[    4.212785] systemd-journald[320]: Received request to flush runtime journal from PID 1",
+        "[    5.116778] Starting network configuration...",
+        "[    5.467123] eth0: Link is up, 1145.14Mbps full-duplex",
+        "[    5.910234] Starting SSH server...",
+        "[    6.023789] sshd[1021]: Server listening on 0.0.0.0 port 22",
+        "[    6.213456] Initializing NekoVM virtual environment...",
+        "[    6.721472] Loading nyan modules: nyan_core, paw_ctrl, whisker_utils",
+        "[    7.213456] Starting X server...",
+        "[    8.345123] Starting desktop environment...",
+        "[    8.964721] NekoVM graphics acceleration enabled",
+        "[    9.567821] All systems operational.",
+        "[   10.000000] NekoVM login: _",
+      ];
+
+      function addTextToTerminal(text) {
+        const span = document.createElement("span");
+        span.textContent = text;
+        terminal.appendChild(span);
+      }
+
+      function typeText(text, delay = 30) {
+        return new Promise((resolve) => {
+          let i = 0;
+          const intervalId = setInterval(() => {
+            if (i < text.length) {
+              addTextToTerminal(text[i]);
+              i++;
+            } else {
+              clearInterval(intervalId);
+              addTextToTerminal("\n");
+              resolve();
+            }
+          }, delay);
+        });
+      }
+	  async function transition(){
+		setTimeout(() => {
+			videoContainer.style.transition = 'opacity 2s ease-in-out';
+			videoContainer.style.opacity = 0;
+			setTimeout(()=>{
+				document.getElementById('goto_main').click();
+			},2000);
+		},1000);
+	  }
+      async function typeAllLines() {
+		video.currentTime = 0;
+		video.playbackRate = 0.5;
+		setTimeout(() => {
+          terminalContainer.style.opacity = 0.2;
+          setTimeout(() => {
+			terminalContainer.style.transition = 'opacity 1s ease-in-out';
+			terminalContainer.style.opacity = 0;
+			transition();
+          }, 12000); // 10 seconds fade + 3 seconds hold
+        }, 5000);
+        for (let i = 0; i < bootMessages.length; i++) {
+          // Faster typing for system messages, slower for login prompt
+          const typingSpeed =
+            i === bootMessages.length - 1
+              ? 100
+              : bootMessages[i].startsWith("[")
+                ? 5
+                : 30;
+
+          await typeText(bootMessages[i], typingSpeed);
+
+          // Longer pause between major boot stages
+          if (
+            bootMessages[i].startsWith("Starting") ||
+            bootMessages[i] === ""
+          ) {
+            await new Promise((resolve) => setTimeout(resolve, 500));
+          } else {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+
+          // Ensure the terminal content is always visible at the bottom
+        //   terminalContainer.scrollTop = terminalContainer.scrollHeight;
+        }
+
+        // Replace the last line with cursor
+        // const lastLine = terminal.lastChild;
+        // if (lastLine) {
+        //   terminal.removeChild(lastLine);
+        //   const loginText = bootMessages[bootMessages.length - 1].replace(
+        //     "_",
+        //     ""
+        //   );
+        //   addTextToTerminal(loginText);
+
+        //   const cursorSpan = document.createElement("span");
+        //   cursorSpan.className = "cursor";
+        //   cursorSpan.textContent = "█";
+        //   terminal.appendChild(cursorSpan);
+        // }
+
+        // Start terminal fade out after a small delay
+        
+      }
+
+      // Wait for video to load or timeout after 3 seconds
+      let videoLoaded = false;
+
+      video.addEventListener("loadeddata", () => {
+        videoLoaded = true;
+        if (loading.style.opacity !== "0") {
+          loading.style.opacity = 0;
+          setTimeout(() => {
+            loading.style.display = "none";
+            videoContainer.style.opacity = 1;
+            typeAllLines();
+          }, 800);
+        }
+      });
+
+      // Fallback if video doesn't load or takes too long
+      video.addEventListener("error", () => {
+        console.error("Video failed to load");
+        videoLoaded = true;
+        if (loading.style.opacity !== "0") {
+          loading.style.opacity = 0;
+          setTimeout(() => {
+            loading.style.display = "none";
+            document.body.style.backgroundColor = "#000";
+            typeAllLines();
+          }, 800);
+        }
+      });
+
+      // Timeout after 3 seconds maximum
+      setTimeout(() => {
+        if (!videoLoaded && loading.style.opacity !== "0") {
+          loading.style.opacity = 0;
+          setTimeout(() => {
+            loading.style.display = "none";
+            videoContainer.style.opacity = 1;
+            typeAllLines();
+          }, 800);
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
