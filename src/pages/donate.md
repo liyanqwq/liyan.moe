@@ -30,7 +30,7 @@ description: "Support Li Yan's Work"
     <div class="bg-neutral-100 p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-bold mt-2 mb-1 text-green-600">WeChat Pay</h2>
       <div class="flex justify-center">
-        <img src="/assets/donate_wechat.png" alt="WeChat Pay QR Code" class="w-48 h-48 border-4 border-green-600 rounded-md" />
+        <img src="/assets/donate_wechat.png" alt="WeChat Pay QR Code" class="w-48 h-48 border-4 border-green-600 object-contain bg-white rounded-md" />
       </div>
       <div class="mt-4 text-center opacity-60">
         <span class="inline-block px-6 py-2 bg-green-600 rounded-md cursor-not-allowed">
