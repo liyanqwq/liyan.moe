@@ -36,10 +36,10 @@
 
   /* Settings Menu Styling */
   .settings-menu-item {
-    @apply flex justify-center items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-100 hover:text-gray-800 dark:hover:text-gray-800 cursor-pointer transition-colors;
+    @apply flex justify-center items-center px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-100 hover:text-neutral-800 dark:hover:text-neutral-800 cursor-pointer transition-colors;
   }
   .settings-menu-item-active {
-    @apply bg-gray-100 dark:bg-gray-100 text-gray-800 dark:text-gray-800 transition-colors;
+    @apply bg-neutral-500/70 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-800 transition-colors;
   }
 
   /* Tooltip for social icons */
@@ -50,7 +50,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s;
-    @apply absolute bg-gray-800 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap;
+    @apply absolute bg-neutral-800 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap;
   }
   .social-icon-container:hover .social-tooltip {
     visibility: visible;
@@ -88,4 +88,7 @@
 
   .prose a {
     @apply decoration-dotted underline-offset-4;
+  }
+  .prose pre {
+    @apply max-w-full overflow-x-hidden break-all whitespace-pre-wrap select-text;
   }

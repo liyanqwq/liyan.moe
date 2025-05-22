@@ -1,8 +1,6 @@
 ---
 import Content from "./content.astro";
 
-import HeaderCard from '../components/content/HeaderCard.astro';
-
 import { siteConfig } from "../data/config";
 import { projects } from "../data/projects";
 
@@ -12,21 +10,46 @@ const config = siteConfig[locale];
 
 const nav = config.nav;
 
-const projectList = projects[locale];
+const projectList: any[] = [];
+
+for (const project of projects) {
+    projectList.push({
+        ...project,
+        title: project.title[locale],
+        description: project.description[locale],
+        tags: project.tags[locale],
+    });
+}
+
+projectList.sort((a: any, b: any) => {
+    return new Date(b.time).getTime() - new Date(a.time).getTime();
+});
 
 ---
 
 <Content>
-    <div>
-        <h1>{config.projectsTitle}</h1>
-        <div>
-            {projectList.map((project) => (
-                <div>
-                    <h2>{project.title}</h2>
-                    <p>{project.description}</p>
-                    <p>{project.tags.join(', ')}</p>
-                    <a href={project.link}>{project.link}</a>
-                    <img src={project.image} alt={project.title} />
+    <div class="select-none">
+        <h1>{config.nav.projects.title}</h1>
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-center md:justify-start">
+            {projectList.map((project: any) => (
+                <div class="neumorphic rounded-xl flex flex-col overflow-hidden">
+                    {project.image != "" && <img src={project.image} alt={project.title} class={`mt-0 mb-0 w-full h-48 xl:h-54 object-cover ${project.blur == true ? 'blur-lg hover:blur-none transition-all delay-50 ease-linear' : ''}`} />}
+                    <div class={`p-4 mt-4`}>
+                        <div class="flex justify-between items-center mb-3">
+                            <h2 class="text-lg leading-none font-medium mt-0 mb-0 p-0 whitespace-nowrap overflow-hidden text-ellipsis">{project.title}</h2>
+                            <p class="opacity-80 text-sm mt-0 mb-0 ml-1 p-0 whitespace-nowrap flex-shrink-0">{project.time}</p>
+                        </div>
+                        <p class="mt-0 text-sm opacity-90">{project.description}</p>
+                        
+                        {project.link == "" ? <p class="opacity-60 mt-0">{locale ==   'zh' || locale == 'yue' ? '網頁不可用' : 'Website Not Available'}</p> : <p><a target="_blank" rel="noopener noreferrer" href={project.link}>{new URL(project.link).hostname}</a></p>}
+                        {project.tags.length > 0 && 
+                        <p class="mb-0 mt-4 flex flex-nowrap gap-2 opacity-80 overflow-x-hidden">
+                            {project.tags.map((tag: string) => (
+                                <span class="border px-2 py-1 rounded-xl text-sm flex-shrink-0">{tag}</span>
+                            ))}
+                        </p>
+                        }
+                    </div>
                 </div>
             ))}
         </div>

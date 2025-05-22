@@ -21,7 +21,7 @@ const nav = config.nav;
 
     <div class="grid grid-cols-3 gap-4 w-full max-w-md">
       {Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => (
-        <a href={section.slug} class="nav-button tracking-wide">{section.title}</a>
+        section.slug[0] == '/' ? <a href={section.slug} class="nav-button tracking-wide">{section.title}</a> : <a href={section.slug} target="_blank" class="nav-button tracking-wide">{section.title}</a>
       ))}
     </div>
     <div class="flex justify-center items-center w-full max-w-md mt-8">

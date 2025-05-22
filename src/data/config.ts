@@ -27,11 +27,11 @@ export const siteConfig = {
       },
       "blog": {
         "title": "網誌",
-        "slug": "//blog.liyan.moe"
+        "slug": "https://blog.liyan.moe"
       },
       "radio": {
         "title": "電台",
-        "slug": "//vr2zun.com"
+        "slug": "https://vr2zun.com"
       },
       "friends": {
         "title": "友人",
@@ -88,11 +88,11 @@ export const siteConfig = {
       },
       "blog": {
         "title": "Blog",
-        "slug": "//blog.liyan.moe"
+        "slug": "https://blog.liyan.moe"
       },
       "radio": {
         "title": "Radio",
-        "slug": "//vr2zun.com"
+        "slug": "https://vr2zun.com"
       },
       "friends": {
         "title": "Friends",
@@ -150,11 +150,11 @@ export const siteConfig = {
       },
       "blog": {
         "title": "網誌",
-        "slug": "//blog.liyan.moe"
+        "slug": "https://blog.liyan.moe"
       },
       "radio": {
         "title": "電台",
-        "slug": "//vr2zun.com"
+        "slug": "https://vr2zun.com"
       },
       "friends": {
         "title": "朋友",
