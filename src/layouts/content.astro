@@ -47,28 +47,21 @@ const pathN = Astro.url.pathname.replace(/\/$|\?.*$/, '');
       </div>
     </div>
   </div>
-  <button id="menu-btn" class="md:hidden fixed top-4 left-4 backdrop-blur-xl bg-neutral-800/5 hover:bg-neutral-800/20 dark:bg-neutral-600/30 dark:hover:bg-neutral-100/50 dark:hover:text-neutral-800 text-neutral-800/60 dark:text-white/50 p-3 rounded-full focus:outline-none z-10 select-none cursor-pointer">
+  <button onclick="toggleMenu()" id="menu-btn" class="md:hidden fixed top-4 left-4 backdrop-blur-xl bg-neutral-800/5 hover:bg-neutral-800/20 dark:bg-neutral-600/30 dark:hover:bg-neutral-100/50 dark:hover:text-neutral-800 text-neutral-800/60 dark:text-white/50 p-3 rounded-full focus:outline-none z-10 select-none cursor-pointer">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" id="menu-btn-open" />
       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" class="hidden" id="menu-btn-close" />
     </svg>
   </button>
   <script is:inline>
-    const menuBtn = document.getElementById('menu-btn');
-    const sidebar = document.getElementById('sidebar');
-    menuBtn.addEventListener('click', () => {
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      const menuBtnOpen = document.getElementById('menu-btn-open');
+      const menuBtnClose = document.getElementById('menu-btn-close');
       sidebar.classList.toggle('hidden');
       sidebar.classList.toggle('fixed');
-      document.getElementById('menu-btn-open').classList.toggle('hidden');
-      document.getElementById('menu-btn-close').classList.toggle('hidden');
-    });
-    document.addEventListener("astro:page-load", () => {
-      menuBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden');
-        sidebar.classList.toggle('fixed');
-        document.getElementById('menu-btn-open').classList.toggle('hidden');
-        document.getElementById('menu-btn-close').classList.toggle('hidden');
-      });
-    });
+      menuBtnOpen.classList.toggle('hidden');
+      menuBtnClose.classList.toggle('hidden');
+    }
   </script>
 </MainLayout>
