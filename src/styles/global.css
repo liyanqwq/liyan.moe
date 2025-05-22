@@ -1,0 +1,94 @@
+@import "tailwindcss" source('../');
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.animated-gradient {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Neumorphic Card Style */
+  .neumorphic {
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 5px 5px 10px rgba(209, 205, 199, 0.3),
+                -5px -5px 10px rgba(250, 250, 250, 0.5);
+    @apply border border-neutral-200/10 bg-neutral-200/10;
+    /* transition: all 0.3s ease; */
+  }
+
+  [data-theme=dark] .neumorphic {
+    @apply border border-neutral-200/5 bg-neutral-700/5;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 5px 5px 10px rgba(30, 30, 30, 0.05),
+                -5px -5px 10px rgba(70, 70, 70, 0.05);
+  }
+
+  /* Settings Menu Styling */
+  .settings-menu-item {
+    @apply flex justify-center items-center px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-100 hover:text-neutral-800 dark:hover:text-neutral-800 cursor-pointer transition-colors;
+  }
+  .settings-menu-item-active {
+    @apply bg-neutral-500/70 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-800 transition-colors;
+  }
+
+  /* Tooltip for social icons */
+  .social-icon-container {
+    position: relative;
+  }
+  .social-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    @apply absolute bg-neutral-800 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap;
+  }
+  .social-icon-container:hover .social-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .nav-button {
+    @apply flex justify-center items-center bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white py-3 px-4 rounded-lg shadow-md transition-all duration-200;
+  }
+
+  .font-zh, .font-yue {
+    font-family: 'LXGW Bright SemiLight', 'Noto Sans CJK SC', "Noto Sans SC", "Source Sans Pro", sans-serif;
+  }
+
+  .font-en {
+    font-family: 'LXGW Bright SemiLight', 'Noto Sans CJK SC', "Noto Sans SC", "Source Sans Pro", sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
+
+  .prose a {
+    @apply decoration-dotted underline-offset-4;
+  }
+  .prose pre {
+    @apply max-w-full overflow-x-hidden break-all whitespace-pre-wrap select-text;
+  }

@@ -1,0 +1,25 @@
+---
+import { siteConfig } from "../../data/config";
+import SocialIcons from "./SocialIcons.astro";
+
+const locale = Astro.currentLocale;
+
+const config = siteConfig[locale];
+
+const nav = config.nav;
+---
+
+<div class="flex justify-center items-center w-full overflow-hidden neumorphic backdrop-blur-sm rounded-lg shadow-md h-32 mb-8 select-none">
+<div class="flex relative justify-between items-center overflow-hidden h-32 py-6 px-4 transition-all duration-200">
+    <div class="group absolute -bottom-4 -left-5">
+        <img src="/assets/avatar_1.webp" class="h-35 w-35 object-cover group-hover:hidden" ondragstart="return false;" />
+        <img src="/assets/avatar_2.webp" class="h-35 w-35 object-cover hidden group-hover:block" ondragstart="return false;" />
+    </div>
+    <div class="ml-28 md:ml-25">
+        <h1 id="home-username" class="tracking-wide dark:opacity-90 text-[1.8rem] md:text-[1.5rem] font-medium mb-2 md:mb-1.5 mt-0">{config.name}</h1>
+        <div>
+            <SocialIcons />
+        </div>
+    </div>
+</div>
+</div>

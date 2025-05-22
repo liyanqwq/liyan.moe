@@ -1,0 +1,63 @@
+---
+import MainLayout from './MainLayout.astro';
+
+import HeaderCard from '../components/content/HeaderCard.astro';
+
+import { siteConfig } from "../data/config";
+
+const locale = Astro.currentLocale;
+
+const config = siteConfig[locale];
+
+const nav = config.nav;
+
+---
+
+<MainLayout>
+  <div class="h-screen select-none overflow-hidden flex flex-col items-center justify-center page-visible page-transition bg-neutral-150 dark:bg-neutral-800">
+    <div class="w-full h-full max-w-6xl mx-auto md:flex md:flex-row gap-6">
+      <aside id="sidebar" class="w-full md:w-72 flex-shrink-0 space-y-6 hidden md:block top-0 left-0 z-5 py-4 md:py-8 md:ml-4 px-4 md:px-0 bg-white/20 backdrop-blur-2xl dark:bg-neutral-800/20 md:bg-transparent md:backdrop-blur-none md:dark:bg-transparent h-screen md:h-auto">
+        <div class="hidden md:block">
+          <HeaderCard key="desktop" />
+        </div>
+        <div class="p-6 mt-24 md:mt-0 neumorphic">
+          <h3 id="sidebar-nav-title" class="text-lg font-semibold mb-4 text-neutral-700 dark:text-neutral-200">{config.navTitle}</h3>
+          <nav class="space-y-2">
+            {Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => (
+              section.slug[0] == '/' ? <a href={section.slug} class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${Astro.url.pathname === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a> : <a href={section.slug} target="_blank" class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${Astro.url.pathname === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a>
+            ))}
+            <a href="/" id="back-to-home" class="block px-4 py-2 mt-4 rounded-md text-center bg-neutral-600 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/80 dark:hover:text-neutral-800 transition-colors">{config.backToHome}</a>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="h-screen w-screen flex flex-col py-4 md:py-8 md:mx-4 px-4 md:px-0">
+        <div class="block md:hidden">
+          <HeaderCard key='mobile' />
+        </div>
+
+        <main class="pb-6 px-6 md:px-8 md:ml-0 neumorphic flex-grow-0 h-full overflow-y-scroll overflow-x-hidden">
+          <div id="content-body" class="select-text prose dark:prose-invert max-w-full text-justify text-neutral-700 dark:text-neutral-300 first:mt-0 pt-8 md:pt-9">
+            <slot />
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <button id="menu-btn" class="md:hidden fixed top-4 left-4 backdrop-blur-xl bg-neutral-800/5 hover:bg-neutral-800/20 dark:bg-neutral-600/30 dark:hover:bg-neutral-100/50 dark:hover:text-neutral-800 text-neutral-800/60 dark:text-white/50 p-3 rounded-full focus:outline-none z-10 select-none cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" id="menu-btn-open" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" class="hidden" id="menu-btn-close" />
+    </svg>
+  </button>
+  <script is:inline>
+    const menuBtn = document.getElementById('menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+      sidebar.classList.toggle('fixed');
+      document.getElementById('menu-btn-open').classList.toggle('hidden');
+      document.getElementById('menu-btn-close').classList.toggle('hidden');
+    });
+  </script>
+</MainLayout>

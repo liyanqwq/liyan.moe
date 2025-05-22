@@ -1,0 +1,33 @@
+---
+import MainLayout from './MainLayout.astro';
+
+import HeaderCard from '../components/HeaderCard.astro';
+
+import { siteConfig } from "../data/config";
+
+const locale = Astro.currentLocale;
+
+// console.log(locale);
+
+const config = siteConfig[locale];
+
+const nav = config.nav;
+
+---
+
+<MainLayout>
+  <div id="home-page" class="w-screen h-screen flex flex-col items-center justify-center animated-gradient text-white p-6 page-visible page-transition">
+    <HeaderCard />
+
+    <div class="grid grid-cols-3 gap-4 w-full max-w-md">
+      {Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => (
+        section.slug[0] == '/' ? <a href={section.slug} class="nav-button tracking-wide">{section.title}</a> : <a href={section.slug} target="_blank" class="nav-button tracking-wide">{section.title}</a>
+      ))}
+    </div>
+    <div class="flex justify-center items-center w-full max-w-md mt-8">
+      <p class='text-sm opacity-60'>&copy; 2019 - {new Date().getFullYear()} <a href={config.social.github.url} rel="noopener noreferrer" target="_blank">{config.name}</a>.</p>
+    </div>
+  </div>
+
+  
+</MainLayout>

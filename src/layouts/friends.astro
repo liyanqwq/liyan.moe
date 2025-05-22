@@ -1,0 +1,35 @@
+---
+import Content from "./content.astro";
+
+import HeaderCard from '../components/content/HeaderCard.astro';
+
+import { siteConfig } from "../data/config";
+import { friends } from "../data/friends";
+
+const locale = Astro.currentLocale;
+
+const config = siteConfig[locale];
+
+const nav = config.nav;
+
+const friendList = friends;
+
+---
+
+<Content>
+    <div class="select-none">
+        <h1>{config.nav.friends.title}</h1>
+        <div class="w-full flex flex-wrap gap-4 justify-center md:justify-start">
+            {friendList.map((friend) => (
+                <a rel="noopener noreferrer" target="_blank" href={friend.url} class="neumorphic no-underline px-6 py-4 rounded-xl flex items-center justify-between">
+                    <img src={friend.avatar} alt={friend.name} class={`size-16  mt-0 mb-0 mr-6 ${friend.rounded ? 'rounded-' + friend.rounded : 'rounded-full'}`} />
+                    <div>
+                        <h2 class="text-xl font-medium mt-0 mb-1 leading-none p-0">{friend.name}</h2>
+                        <p class="text-sm opacity-80 mt-0 mb-0 p-0">{friend.description}</p>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+    <slot />
+</Content>

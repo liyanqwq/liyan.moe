@@ -1,13 +1,37 @@
 ---
-layout: '../layouts/BaseLayout.astro'
-title: About
+layout: ../layouts/content.astro
 ---
-Hi!
 
-My name is Li Yan.
+<h1 class="text-center mb-12">ฅ^•ﻌ•^ฅ 你好呀！</h1>
 
-I'm a full stack web developer, and also a CTFer.
+我是 **立言 (Li Yan)**！你也可以叫我 **Leo**。
 
-If u love my website, could u please <a href="//github.com/liyanqwq/liyan.moe" target="_blank" rel="noopener noreferrer" class="underline-offset-4 underline decoration-dotted hover:decoration-white decoration-gray-600">give me a star</a> or <a href="/donate" class="underline-offset-4 underline decoration-dotted hover:decoration-white decoration-gray-600">donate me</a>?
+## ฅ(≈>ܫ<≈)ฅ 關於我
 
-Thank u so much!
+目前我在香港理工大學主修**資訊安全**，正努力成為一名資訊安全專業人士。
+
+## (=^･ω･^=) 興趣愛好
+
+作為一個對科技充滿熱情的探索者，我喜歡不斷挑戰自己，學習新技術，並解決複雜的問題。我是一個：
+
+* 退役 **OIer** (⌐■\_■)
+* 網絡安全愛好者和 **CTF 玩家** ฅ(ﾐ・ﻌ・ﾐ)ฅ
+* **全棧 Web 開發者** (✿◠‿◠)
+* 業餘無線電愛好者 (**Ham**)，我的呼號是 <a href="//vr2zun.com" target="_blank" rel="noopener noreferrer">**VR2ZUN**</a> (=^-ω-^=)
+
+## (^.\_.~)ﾉ 支持我
+
+如果你喜歡我的網站，不妨給我的開源項目 <a href="//github.com/liyanqwq/liyan.moe" target="_blank" rel="noopener noreferrer">點個星星</a> 吧！你也可以考慮 <a href="/donate">支持一下我</a>。
+
+感謝你的支持！ฅ(♡ơ ₃ơ)ฅ
+
+## ฅ^•ﻌ•^ฅ 技能樹
+
+```
+網頁開發    ★★★★★
+資訊安全    ★★★★☆
+數據分析    ★★★★☆
+業餘電台    ★★☆☆☆ (萌新)
+```
+
+歡迎隨時與我交流，共同探索技術的樂趣！ฅ(●´ω｀●)ฅ
