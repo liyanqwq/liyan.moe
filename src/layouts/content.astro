@@ -56,11 +56,13 @@ const pathN = Astro.url.pathname.replace(/\/$|\?.*$/, '');
   <script is:inline>
     const menuBtn = document.getElementById('menu-btn');
     const sidebar = document.getElementById('sidebar');
-    menuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('hidden');
-      sidebar.classList.toggle('fixed');
-      document.getElementById('menu-btn-open').classList.toggle('hidden');
-      document.getElementById('menu-btn-close').classList.toggle('hidden');
+    document.addEventListener("astro:page-load", () => {
+      menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+        sidebar.classList.toggle('fixed');
+        document.getElementById('menu-btn-open').classList.toggle('hidden');
+        document.getElementById('menu-btn-close').classList.toggle('hidden');
+      });
     });
   </script>
 </MainLayout>
