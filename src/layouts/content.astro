@@ -11,6 +11,9 @@ const config = siteConfig[locale];
 
 const nav = config.nav;
 
+// get params without ending / and ?
+const pathN = Astro.url.pathname.replace(/\/$|\?.*$/, '');
+
 ---
 
 <MainLayout>
@@ -24,7 +27,7 @@ const nav = config.nav;
           <h3 id="sidebar-nav-title" class="text-lg font-semibold mb-4 text-neutral-700 dark:text-neutral-200">{config.navTitle}</h3>
           <nav class="space-y-2">
             {Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => (
-              section.slug[0] == '/' ? <a href={section.slug} class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${Astro.url.pathname === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a> : <a href={section.slug} target="_blank" class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${Astro.url.pathname === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a>
+              section.slug[0] == '/' ? <a href={section.slug} class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${pathN === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a> : <a href={section.slug} target="_blank" class={`sidebar-nav-button block px-4 py-2 rounded-md transition-colors ${pathN === section.slug ? 'bg-neutral-500 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/60 dark:hover:text-neutral-800' : 'text-neutral-700 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>{section.title}</a>
             ))}
             <a href="/" id="back-to-home" class="block px-4 py-2 mt-4 rounded-md text-center bg-neutral-600 text-neutral-100 hover:bg-neutral-900 dark:bg-neutral-700/50 dark:hover:bg-white/80 dark:hover:text-neutral-800 transition-colors">{config.backToHome}</a>
           </nav>
