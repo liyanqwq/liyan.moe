@@ -9,14 +9,14 @@ const config = siteConfig[locale];
 const nav = config.nav;
 ---
 
-<div class="flex justify-center items-center w-full max-w-md overflow-hidden bg-white/10 backdrop-blur-sm text-white/80 rounded-lg shadow-md h-42 mb-12 select-none">
-<div class="flex relative justify-between items-center overflow-hidden max-w-md h-42 py-6 px-4 transition-all duration-200">
-    <div class="group absolute -bottom-4 -left-6 scale-90 sm:scale-100">
+<div class="flex justify-center items-center w-full max-w-md overflow-hidden bg-white/10 backdrop-blur-sm text-white/80 rounded-lg shadow-md h-36 sm:h-42 mb-12 select-none">
+<div class="flex relative justify-between items-center overflow-hidden max-w-md h-36 sm:h-42 py-6 px-4 transition-all duration-200">
+    <div class="group absolute -bottom-8 sm:-bottom-4 -left-6 scale-90 sm:scale-100">
         <img src="/assets/avatar_1.webp" class="h-48 w-48 object-cover group-hover:hidden" ondragstart="return false;" />
         <img src="/assets/avatar_2.webp" class="h-48 w-48 object-cover hidden group-hover:block" ondragstart="return false;" />
     </div>
     <div class="ml-32 sm:ml-40 scale-90 sm:scale-100">
-        <h1 id="home-username" class="tracking-wide text-[2rem] sm:text-[2.25rem] font-medium mb-3 mt-0 flex-shrink-0 no-wrap overflow-x-hidden">{config.name}</h1>
+        <h1 id="home-username" class="tracking-wide text-[1.8rem] sm:text-[2.25rem] font-medium mb-3 mt-0 flex-shrink-0 no-wrap overflow-x-hidden">{config.name}</h1>
         <!-- <p id="home-motto" class="text-md">{config.motto}</p> -->
         <div>
             <SocialIcons />
