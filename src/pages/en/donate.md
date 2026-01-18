@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/content.astro
 title: Support My Work
-description: Support my creative work and help me create more quality content
+description: Support my creative work and help me create more quality content.
 ---
 <div class="donation-page select-none">
     <div class="text-center mb-10">

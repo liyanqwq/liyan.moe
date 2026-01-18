@@ -1,5 +1,7 @@
 ---
 layout: ../layouts/content.astro
+title: 關於
+description: 想更多瞭解我嗎？這裏有立言的自我介紹。
 ---
 
 <h1 class="text-center mb-12">ฅ^•ﻌ•^ฅ 你好呀！</h1>

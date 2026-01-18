@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/content.astro
 title: 支持我嘅創作
-description: 支持我嘅創作，等我繼續產出更多高質素內容
+description: 支持我的創作，讓我能持續產出更多優質內容。
 ---
 <div class="donation-page select-none">
     <div class="text-center mb-10">

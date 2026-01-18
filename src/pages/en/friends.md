@@ -1,5 +1,7 @@
 ---
 layout: ../../layouts/friends.astro
+title: Friends
+description: A friend afar brings a distant land near. They are Li Yan's good friends.
 ---
 
 ---

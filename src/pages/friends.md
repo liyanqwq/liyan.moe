@@ -1,5 +1,7 @@
 ---
 layout: ../layouts/friends.astro
+title: 友人
+description: 海内存知己，天涯若比鄰。Ta 們是立言的好朋友。
 ---
 
 ---

@@ -1,5 +1,7 @@
 ---
 layout: ../../layouts/content.astro
+title: About
+description: Want to know more about me? Here's Li Yan's self-introduction.
 ---
 <h1 class="text-center mb-12">ฅ^•ﻌ•^ฅ Hello there!</h1>
 

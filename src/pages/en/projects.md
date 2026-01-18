@@ -1,5 +1,7 @@
 ---
 layout: ../../layouts/projects.astro
+title: Projects
+description: These are some of my previous works. Sorry, just some humble contributions.
 ---
 
 # Projects

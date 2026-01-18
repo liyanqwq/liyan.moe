@@ -5,6 +5,14 @@ import '../styles/global.css';
 
 import { siteConfig, SITE } from "../data/config";
 
+// Props 类型定义
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const { title: propsTitle, description: propsDescription } = Astro.props;
+
 const locale = Astro.currentLocale;
 
 const config = siteConfig[locale];
@@ -17,15 +25,19 @@ const i18nPath = (lang: string) => {
     return `/${lang}${localPath}`;
 }
 const nav = config.nav;
-let title = config.title;
-Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => {
-if (section.slug === Astro.url.pathname) {
-        title = section.title + ' | ' + title;
-    }
-});
 
-// OG 相关配置
-const description = config.description;
+// 优先使用 frontmatter 的 title，否则使用 config
+let title = propsTitle ? `${propsTitle} | ${config.title}` : config.title;
+if (!propsTitle) {
+  Object.entries(nav).map(([slug, section]: [string, { title: string; slug: string; }]) => {
+    if (section.slug === Astro.url.pathname) {
+      title = section.title + ' | ' + config.title;
+    }
+  });
+}
+
+// 优先使用 frontmatter 的 description，否则使用 config
+const description = propsDescription || config.description;
 const canonicalURL = new URL(Astro.url.pathname, SITE.website);
 const ogImage = new URL(SITE.ogImage ? `/${SITE.ogImage}` : "/og.png", SITE.website);
 ---
