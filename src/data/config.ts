@@ -1,7 +1,16 @@
+// 网站全局配置
+export const SITE = {
+  website: "https://liyan.moe",
+  author: "立言 Li Yan",
+  profile: "https://liyan.moe",
+  ogImage: "assets/liyan-og.png",
+};
+
 export const siteConfig = {
   "zh": {
     "name": "立言 Li Yan",
     "title": "立言 Li Yan",
+    "description": "立言的個人網站 - 求真務實，重義輕利",
     "motto": "求真務實，重義輕利",
     "settings": {
       "title": "設定",
@@ -64,8 +73,9 @@ export const siteConfig = {
   "en": {
     "name": "立言 Li Yan",
     "title": "Li Yan's Personal Website",
+    "description": "Li Yan's Personal Website - Across the Great Wall, we can reach every corner of the world.",
     "motto": "Across the Great Wall, we can reach every corner of the world.",
-      "avatar": [
+    "avatar": [
       "/assets/avatar_1.webp",
       "/assets/avatar_2.webp"
     ],
@@ -125,6 +135,7 @@ export const siteConfig = {
   "yue": {
     "name": "立言 Li Yan",
     "title": "立言 Li Yan",
+    "description": "立言的個人網站 - 求真務實，重義輕利",
     "motto": "求真務實，重義輕利",
     "avatar": [
       "/assets/avatar_1.webp",

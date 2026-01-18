@@ -1,8 +1,9 @@
 ---
+import { Font } from "astro:assets";
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
-import { siteConfig } from "../data/config";
+import { siteConfig, SITE } from "../data/config";
 
 const locale = Astro.currentLocale;
 
@@ -22,15 +23,48 @@ if (section.slug === Astro.url.pathname) {
         title = section.title + ' | ' + title;
     }
 });
+
+// OG 相关配置
+const description = config.description;
+const canonicalURL = new URL(Astro.url.pathname, SITE.website);
+const ogImage = new URL(SITE.ogImage ? `/${SITE.ogImage}` : "/og.png", SITE.website);
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang={locale ?? "zh"} data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/webp" href="/favicon.webp" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- General Meta Tags -->
     <title>{title}</title>
-    <link rel="icon" href="/favicon.webp" type="image/webp">
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.author} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Load Font -->
+    <Font cssVariable="--font-google-sans-code" preload={[{ subset: "latin", weight: 400, style: "normal" }]} />
+    <Font cssVariable="--font-lxgw-wenkai-tc" preload />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={config.name} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
     <script is:inline>
       const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -63,8 +97,6 @@ if (section.slug === Astro.url.pathname) {
       });
     </script>
     <ClientRouter></ClientRouter>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" /> -->
-    <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkaibright/dist/LXGWBright-SemiLight/result.css' />
   </head>
   <body class={`font-${locale} bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 transition-colors duration-300 overflow-x-hidden touch-none`}>
     <slot />

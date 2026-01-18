@@ -62,11 +62,11 @@
   }
 
   .font-zh, .font-yue {
-    font-family: 'LXGW Bright SemiLight', 'Noto Sans CJK SC', "Noto Sans SC", "Source Sans Pro", sans-serif;
+    font-family: var(--font-lxgw-wenkai-tc);
   }
 
   .font-en {
-    font-family: 'LXGW Bright SemiLight', 'Noto Sans CJK SC', "Noto Sans SC", "Source Sans Pro", sans-serif;
+    font-family: var(--font-lxgw-wenkai-tc);
   }
 
   ::-webkit-scrollbar {
